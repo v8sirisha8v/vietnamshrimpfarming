@@ -1,47 +1,56 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-function WelcomeScreen({ navigation }) {
+const SOSAnimation = () => {
+  const bounceAnim = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    startAnimation();
+  }, []);
+
+  const startAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(bounceAnim, {
+          toValue: -50,
+          duration: 500,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(bounceAnim, {
+          toValue: 0,
+          duration: 500,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]),
+      { iterations: 3 } // Adjust the number of iterations as needed
+    ).start(() => navigation.navigate('Login'));
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Image 
-        source={require("./assets/homepage.png")} 
-        resizeMode="cover"
-        style={{ width: '100%', height: '50%' }}
+    <View style={styles.container}>
+      <Animated.Image
+        source={require('./assets/home.png')}
+        style={[styles.image, { transform: [{ translateY: bounceAnim }] }]}
       />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.buttonText}>Đăng nhập / Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.buttonText}>Đăng ký / Sign up</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-  },
-
-  button: {
-    marginHorizontal: 40,
-    marginVertical: 5,
-    height: 50,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FF474C',
-    borderWidth: 3,
-    borderRadius: 50,
+    justifyContent: 'center',
   },
-
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-  }
+  image: {
+    width: '80%', // Adjust width as needed
+    height: '30%', // Adjust height as needed
+  },
 });
 
-export default WelcomeScreen;
+export default SOSAnimation;
