@@ -1,0 +1,11 @@
+POST request: create resource (not idenmpotent)
+GET request: read resource (idempotent)
+PUT request: update resource (idempotent)
+DELETE request: delete resource (idempotent)
+
+idempotent = making multiple requests has the same
+effect as making one effect
+
+200-level code = SUCCESS
+400 = something wrong with the request (ex: syntax)
+500 = something wrong on server level
