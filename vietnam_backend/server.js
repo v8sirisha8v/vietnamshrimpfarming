@@ -4,8 +4,10 @@ const PORT = process.env.PORT || 3001;
 
 
 const app = express();
+const cors = require('cors');
 const mongoose = require("mongoose");
 app.use(express.json());
+app.use(cors({origin: true, credentials: true}));
 
 const mongoUrl = "mongodb+srv://sirishakvelavan:fireengine@cluster0.8jug1ym.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
