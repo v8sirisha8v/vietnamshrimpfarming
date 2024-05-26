@@ -1,94 +1,97 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, SafeAreaView, Image, TextInput, View, ScrollView } from 'react-native';
-import { FontAwesome, AntDesign, MaterialIcons } from '@expo/vector-icons'; // Import colorful icons
+import { FontAwesome, AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons'; // Import Entypo
+import PhoneInput from 'react-native-phone-number-input';
 import axios from 'axios';
 
 function LoginScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [activeButton, setActiveButton] = useState('login'); // Set the initial active button to 'login'
+  const [phoneStartedTyping, setPhoneStartedTyping] = useState(false);
+  const [phoneVerify, setPhoneVerify] = useState(false);
+  const [activeButton, setActiveButton] = useState('login');
   const [fname, setFname] = useState('');
-  const [fnameVerify, setFnameVerify] = useState(false);
+  const [fnameVerify, setFnameVerify] = useState(null);
+  const [fnameStartedTyping, setFnameStartedTyping] = useState(false);
   const [lname, setLname] = useState('');
-  const [lnameVerify, setLnameVerify] = useState(false);
-  const [mobile, setMobile] = useState('');
-  const [mobileVerify, setMobileVerify] = useState(false);
+  const [lnameVerify, setLnameVerify] = useState(null);
+  const [lnameStartedTyping, setLnameStartedTyping] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordVerify, setPasswordVerify] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false); // State to manage password visibility
 
   function handleSubmit() {
     const userData = {
       fname: fname,
       lname: lname,
-      mobile: mobile,
+      mobile: phoneNumber,
       password: password
     };
 
-    axios.post('http://10.0.0.155:3001/register', userData)
-      .then(res => console.log(res.data))
-      .catch(e => console.log(e));
+    axios.post('http://98.37.106.17:3001/register', userData)
+    .then(res => console.log(res.data))
+    .catch(error => {
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        console.log('Response error:', error.response.data);
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.log('Request error:', error.request);
+      } else {
+        // Something happened in setting up the request
+        console.log('Axios error:', error.message);
+      }
+    });
   }
 
   function handlefName(e) {
-    const fnameVar = e.nativeEvent.text;
-    setFname(fnameVar);
-    setFnameVerify(false);
-
-    if (fnameVar.length > 1) {
-      setFnameVerify(true);
-    }
+    const nameVar = e.nativeEvent.text;
+    setFname(nameVar);
+    setFnameStartedTyping(true);
+    setFnameVerify(nameVar.length > 1 ? true : false);
   }
 
   function handlelName(e) {
     const lnameVar = e.nativeEvent.text;
     setLname(lnameVar);
-    setLnameVerify(false);
-
-    if (lnameVar.length > 1) {
-      setLnameVerify(true);
-    }
+    setLnameStartedTyping(true);
+    setLnameVerify(lnameVar.length > 1 ? true : false);
   }
 
-  function handleMobile(mobileVar) {
-    setMobile(mobileVar);
-    setMobileVerify(false);
-
-    if (true) {
-      setMobile(mobileVar);
-      setMobileVerify(true);
-    }
+  function handlePhoneNumber(text) {
+    setPhoneNumber(text);
+    setPhoneStartedTyping(true);
+    setPhoneVerify(text.length === 10);
   }
 
   function handlePassword(e) {
     const passwordVar = e.nativeEvent.text;
     setPassword(passwordVar);
-    setPasswordVerify(false);
+    setPasswordVerify(validatePassword(passwordVar));
+  }
 
-    if (true) {
-      setPassword(passwordVar);
-      setPasswordVerify(true);
-    }
+  function validatePassword(password) {
+    // Validate password requirements
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasMinLength = password.length >= 12;
+    return hasUpperCase && hasLowerCase && hasMinLength;
+  }
+
+  function togglePasswordVisibility() {
+    setPasswordVisible(!passwordVisible);
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.center}>
-          <Image style={styles.images}
-            source={require("./assets/shrimp.png")}
-          />
+          <Image style={styles.images} source={require("./assets/shrimp.png")} />
         </View>
         <View style={styles.dividerText}>
-          <TouchableOpacity
-            onPress={() => setActiveButton('login')}
-            style={styles.buttonText}
-          >
+          <TouchableOpacity onPress={() => setActiveButton('login')} style={styles.buttonText}>
             <Text style={[styles.text, activeButton === 'login' && styles.activeText]}>Đăng Nhập / Log In</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => setActiveButton('signup')}
-            style={styles.buttonText}
-          >
+          <TouchableOpacity onPress={() => setActiveButton('signup')} style={styles.buttonText}>
             <Text style={[styles.text, activeButton === 'signup' && styles.activeText]}>Đăng Ký / Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -100,21 +103,41 @@ function LoginScreen({ navigation }) {
         <View style={styles.inputContainer}>
           {activeButton === 'login' && (
             <>
-              <TextInput
-                style={styles.input}
-                placeholder="PhoneNumber"
-                placeholderTextColor="#CCCCCC"
-                onChangeText={setPhoneNumber}
-                value={phoneNumber}
-              />
+              <View style={styles.phoneInputWrapper}>
+                <PhoneInput
+                  defaultCode="VN"
+                  layout="first"
+                  placeholder="Phone Number"
+                  placeholderTextColor="#CCCCCC"
+                  onChangeText={handlePhoneNumber}
+                  value={phoneNumber}
+                  containerStyle={styles.phoneInputContainer}
+                  textContainerStyle={styles.phoneInputTextContainer}
+                  textInputStyle={styles.phoneInputText}
+                  codeTextStyle={styles.phoneInputText}
+                  flagButtonStyle={styles.flagButton}
+                />
+                {phoneStartedTyping && (
+                  phoneVerify ? (
+                    <AntDesign name="checksquare" size={24} color="#3DED97" style={styles.validationIcon} />
+                  ) : (
+                    <AntDesign name="closesquare" size={24} color="#FF0000" style={styles.validationIcon} />
+                  )
+                )}
+              </View>
+              <View>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
                 placeholderTextColor="#CCCCCC"
                 onChangeText={setPassword}
                 value={password}
-                secureTextEntry={true}
+                secureTextEntry={!passwordVisible} // Hide password if not visible
               />
+              <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                <Entypo name={passwordVisible ? "eye" : "eye-with-line"} size={24} color="gray" />
+              </TouchableOpacity>
+              </View>
               <View>
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                   <Text style={styles.buttonText}>Login</Text>
@@ -125,175 +148,272 @@ function LoginScreen({ navigation }) {
 
           {activeButton === 'signup' && (
             <>
-              <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                placeholderTextColor="#CCCCCC"
-                onChangeText={setPhoneNumber}
-                value={phoneNumber}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="#CCCCCC"
-                onChangeText={setPassword}
-                value={password}
-                secureTextEntry={true}
-              />
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.inputWithIcon}
+                  placeholder="First Name"
+                  placeholderTextColor="#CCCCCC"
+                  onChange={handlefName}
+                  value={fname}
+                />
+                {fnameStartedTyping && (
+                  fnameVerify ? (
+                    <AntDesign name="checksquare" size={24} color="#3DED97" style={styles.validationIcon} />
+                  ) : (
+                    <AntDesign name="closesquare" size={24} color="#FF0000" style={styles.validationIcon} />
+                  )
+                )}
+              </View>
+              {!fnameVerify && fnameStartedTyping && (
+                <Text style={styles.errorText}>First name should be more than 1 character.</Text>
+              )}
 
-              <TextInput
-                style={styles.input}
-                placeholder="First Name"
-                placeholderTextColor="#CCCCCC"
-                onChange={handlefName}
-                value={fname}
-              />
-
-              <TextInput
-                style={styles.input}
-                placeholder="Last Name"
-                placeholderTextColor="#CCCCCC"
-                onChangeText={setLname}
-                value={lname}
-              />
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.inputWithIcon}
+                  placeholder="Last Name"
+                  placeholderTextColor="#CCCCCC"
+                  onChange={handlelName}
+                  value={lname}
+                />
+                {lnameStartedTyping && (
+                  lnameVerify ? (
+                    <AntDesign name="checksquare" size={24} color="#3DED97" style={styles.validationIcon} />
+                  ) : (
+                    <AntDesign name="closesquare" size={24} color="#FF0000" style={styles.validationIcon} />
+                    )
+                    )}
+                  </View>
+                  {!lnameVerify && lnameStartedTyping && (
+                    <Text style={styles.errorText}>Last name should be more than 1 character.</Text>
+                  )}
+                  <View style={styles.phoneInputWrapper}>
+                    <PhoneInput
+                      defaultCode="VN"
+                      layout="first"
+                      placeholder="Phone Number"
+                      placeholderTextColor="#CCCCCC"
+                      onChangeText={handlePhoneNumber}
+                      value={phoneNumber}
+                      containerStyle={styles.phoneInputContainer}
+                      textContainerStyle={styles.phoneInputTextContainer}
+                      textInputStyle={styles.phoneInputText}
+                      codeTextStyle={styles.phoneInputText}
+                      flagButtonStyle={styles.flagButton}
+                    />
+                    {phoneStartedTyping && (
+                      phoneVerify ? (
+                        <AntDesign name="checksquare" size={24} color="#3DED97" style={styles.validationIcon} />
+                      ) : (
+                        <AntDesign name="closesquare" size={24} color="#FF0000" style={styles.validationIcon} />
+                      )
+                    )}
+                  </View>
+                  {phoneStartedTyping && !phoneVerify && (
+                    <Text style={styles.errorText}>Phone number should be 10 digits</Text>
+                  )}
+                  <View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor="#CCCCCC"
+                    onChange={handlePassword}
+                    value={password}
+                    secureTextEntry={!passwordVisible} // Hide password if not visible
+                  />
+                  <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                    <Entypo name={passwordVisible ? "eye" : "eye-with-line"} size={24} color="gray" />
+                  </TouchableOpacity>
+                  {password && (
+                      passwordVerify ? (
+                        <AntDesign name="checksquare" size={24} color="#3DED97" style={styles.validationIcon} />
+                      ) : (
+                        <AntDesign name="closesquare" size={24} color="#FF0000" style={styles.validationIcon} />
+                      )
+                    )}
+                  </View>
+                  {!passwordVerify && password && (
+                    <Text style={styles.errorText}>Password should have minimum 12 characters, one uppercase, and one lowercase.</Text>
+                  )}
+    
+                  <View>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                      <Text style={styles.buttonText}>Sign Up</Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )}
+    
+              <View style={styles.center}>
+                <Text style={styles.tiny}>or</Text>
+              </View>
+              {/* Sign in with Google button */}
+              <TouchableOpacity style={styles.socialButton}>
+                <FontAwesome name="google" size={24} color="#DB4437" />
+                <Text style={styles.socialButtonText}>Sign in with Google</Text>
+              </TouchableOpacity>
+              {/* Sign in with Facebook button */}
               <View>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                  <Text style={styles.buttonText}>Sign Up</Text>
+                <TouchableOpacity style={styles.socialButton}>
+                  <AntDesign name="facebook-square" size={24} color="#4267B2" />
+                  <Text style={styles.socialButtonText}>Sign in with Facebook</Text>
+                </TouchableOpacity>
+                {/* Sign in with Apple button */}
+                <TouchableOpacity style={styles.socialButton}>
+                  <MaterialIcons name="apple" size={24} color="#000000" />
+                  <Text style={styles.socialButtonText}>Sign in with Apple</Text>
                 </TouchableOpacity>
               </View>
-            </>
-          )}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      );
+    }
+    
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: 'black',
+      },
+      tiny: {
+        color: 'white',
+        marginTop: 10,
+      },
+      center: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+      },
+      dividerText: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      },
+      dividor: {
+        flexDirection: 'row',
+        margin: 10,
+        height: 2,
+      },
+      dividerHalf: {
+        flex: 1,
+        height: '100%',
+      },
+      errorText: {
+        color: 'red',
+        marginBottom: 10,
+      },
+      images: {
+        width: 150,
+        height: 150,
+        resizeMode: 'contain',
+        marginBottom: 20,
+      },
+      text: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: 'red',
+      },
+      activeText: {
+        color: 'white',
+      },
+      scrollContainer: {
+        flexGrow: 1,
+      },
+      inputContainer: {
+        paddingTop: 35,
+        paddingHorizontal: 40,
+      },
+      inputWrapper: {
+        position: 'relative',
+      },
+      input: {
+        height: 50,
+        backgroundColor: '#333333',
+        borderWidth: 1,
+        borderColor: '#666666',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        marginBottom: 10,
+        color: 'white',
+      },
+      inputWithIcon: {
+        height: 50,
+        backgroundColor: '#333333',
+        borderWidth: 1,
+        borderColor: '#666666',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingRight: 45,
+        marginBottom: 10,
+        color: 'white',
+      },
+      validationIcon: {
+        position: 'absolute',
+        right: 20,
+        top: 12,
+      },
 
-          <View style={styles.center}>
-            <Text style={styles.tiny}>
-              or
-            </Text>
-          </View>
-          {/* Sign in with Google button */}
-          <TouchableOpacity style={styles.socialButton}>
-            <FontAwesome name="google" size={24} color="#DB4437" />
-            <Text style={styles.socialButtonText}>Sign in with Google</Text>
-          </TouchableOpacity>
-          {/* Sign in with Facebook button */}
-          <View>
-            <TouchableOpacity style={styles.socialButton}>
-              <AntDesign name="facebook-square" size={24} color="#4267B2" />
-              <Text style={styles.socialButtonText}>Sign in with Facebook</Text>
-            </TouchableOpacity>
-            {/* Sign in with Apple button */}
-            <TouchableOpacity style={styles.socialButton}>
-              <MaterialIcons name="apple" size={24} color="#000000" />
-              <Text style={styles.socialButtonText}>Sign in with Apple</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+      phoneInputWrapper: {
+        position: 'relative',
+        backgroundColor: '#333333',
+        borderWidth: 1,
+        borderColor: '#666666',
+        borderRadius: 10,
+        marginBottom: 10,
+      },
+      phoneInputContainer: {
+        backgroundColor: 'transparent',
+        borderRadius: 10,
+      },
+      phoneInputTextContainer: {
+        backgroundColor: 'transparent',
+        borderRadius: 10,
+      },
+      phoneInputText: {
+        color: 'white',
+      },
+      button: {
+        marginTop: 10,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FF474C',
+        borderWidth: 3,
+        borderRadius: 15,
+      },
+      buttonText: {
+        fontSize: 18,
+        color: 'white',
+        textAlign: 'center',
+      },
+      socialButton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        height: 50,
+        marginBottom: 10,
+        borderRadius: 30,
+      },
+      socialButtonText: {
+        fontSize: 18,
+        color: 'black',
+        marginLeft: 10,
+      },
+      darkRedBorder: {
+        backgroundColor: '#FF6666',
+      },
+      lightRedBorder: {
+        backgroundColor: '#8B0000',
+      },
+      flagButton: {
+        backgroundColor: 'transparent',
+      },
+      eyeIcon: {
+        position: 'absolute',
+        right: 55,
+        top: 15,
+      },
+    });
+    
+    export default LoginScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-
-  tiny: {
-    color: 'white',
-  },
-
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center', // Center horizontally
-    marginBottom: 20, // Add margin at the bottom
-  },
-
-  dividerText: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-
-  dividor: {
-    flexDirection: 'row',
-    margin: 10,
-    height: 2, // Height of the divider
-  },
-
-  dividerHalf: {
-    flex: 1,
-    height: '100%',
-  },
-
-  images: {
-    width: 150, // Set the width of the image
-    height: 150, // Set the height of the image
-    resizeMode: 'contain', // Maintain aspect ratio and fit within the container
-    marginBottom: 20,
-  },
-
-  text: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: 'red', // Adding text color here
-  },
-
-  activeText: {
-    color: 'white', // Active text color
-  },
-
-  scrollContainer: {
-    flexGrow: 1, // Allow the content to grow vertically
-  },
-
-  inputContainer: {
-    paddingTop: 35,
-    paddingHorizontal: 40,
-  },
-  input: {
-    height: 50,
-    backgroundColor: '#333333',
-    borderWidth: 1,
-    borderColor: '#666666',
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 10,
-    color: 'white',
-  },
-  button: {
-    marginTop: 10,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FF474C',
-    borderWidth: 3,
-    borderRadius: 15,
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-  },
-  socialButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white', // Google blue color
-    height: 50,
-    marginBottom: 10,
-    borderRadius: 30,
-  },
-  socialButtonText: {
-    fontSize: 18,
-    color: 'black',
-    marginLeft: 10,
-  },
-  darkRedBorder: {
-    backgroundColor: '#FF6666', // Dark red color
-  },
-  lightRedBorder: {
-    backgroundColor: '#8B0000', // Light red color
-  },
-});
-
-
-export default LoginScreen;
