@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "vietnamshrimpfarming",
+    "name": "vietnamshrimpfarming", 
     "slug": "vietnamshrimpfarming",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
