@@ -2,12 +2,12 @@
 
 Work accomplished so far:
 
-<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="100px" height="400px" />
-<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="100px" height="400px" />
-<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="100px" height="400px" />
-<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="100px" height="400px" />
-<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="100px" height="400px" />
-<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="100px" height="400px" />
+<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="250px" height="400px" />
+<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="250px" height="400px" />
+<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="250px" height="400px" />
+<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="250px" height="400px" />
+<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="250px" height="400px" />
+<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="250px" height="400px" />
 
 Guide before starting to contribute!
 
