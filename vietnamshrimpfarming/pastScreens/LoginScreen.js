@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { StyleSheet, Text, TouchableOpacity, SafeAreaView, Image, TextInput, View, ScrollView } from 'react-native';
 import { FontAwesome, AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons'; // Import Entypo
 import PhoneInput from 'react-native-phone-number-input';
@@ -10,10 +10,10 @@ function LoginScreen({ navigation }) {
   const [phoneVerify, setPhoneVerify] = useState(false);
   const [activeButton, setActiveButton] = useState('login');
   const [fname, setFname] = useState('');
-  const [fnameVerify, setFnameVerify] = useState(null);
+  const [fnameVerify, setFnameVerify] = useState(false);
   const [fnameStartedTyping, setFnameStartedTyping] = useState(false);
   const [lname, setLname] = useState('');
-  const [lnameVerify, setLnameVerify] = useState(null);
+  const [lnameVerify, setLnameVerify] = useState(false);
   const [lnameStartedTyping, setLnameStartedTyping] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordVerify, setPasswordVerify] = useState(false);
@@ -27,7 +27,7 @@ function LoginScreen({ navigation }) {
       password: password
     };
 
-    axios.post('http://98.37.106.17:3001/register', userData)
+    axios.post('https://8da4-2601-644-8e7f-cae0-5cb8-9747-ad2a-565d.ngrok-free.app/register', userData)
     .then(res => console.log(res.data))
     .catch(error => {
       if (error.response) {
@@ -43,18 +43,16 @@ function LoginScreen({ navigation }) {
     });
   }
 
-  function handlefName(e) {
-    const nameVar = e.nativeEvent.text;
-    setFname(nameVar);
+  function handlefName(text) {
+    setFname(text);
     setFnameStartedTyping(true);
-    setFnameVerify(nameVar.length > 1 ? true : false);
+    setFnameVerify(text.length > 0 ? true : false);
   }
 
-  function handlelName(e) {
-    const lnameVar = e.nativeEvent.text;
-    setLname(lnameVar);
+  function handlelName(text) {
+    setLname(text);
     setLnameStartedTyping(true);
-    setLnameVerify(lnameVar.length > 1 ? true : false);
+    setLnameVerify(text.length > 0 ? true : false);
   }
 
   function handlePhoneNumber(text) {
@@ -63,10 +61,9 @@ function LoginScreen({ navigation }) {
     setPhoneVerify(text.length === 10);
   }
 
-  function handlePassword(e) {
-    const passwordVar = e.nativeEvent.text;
-    setPassword(passwordVar);
-    setPasswordVerify(validatePassword(passwordVar));
+  function handlePassword(text) {
+    setPassword(text);
+    setPasswordVerify(validatePassword(text));
   }
 
   function validatePassword(password) {
@@ -153,7 +150,7 @@ function LoginScreen({ navigation }) {
                   style={styles.inputWithIcon}
                   placeholder="First Name"
                   placeholderTextColor="#CCCCCC"
-                  onChange={handlefName}
+                  onChangeText={handlefName}
                   value={fname}
                 />
                 {fnameStartedTyping && (
@@ -173,7 +170,7 @@ function LoginScreen({ navigation }) {
                   style={styles.inputWithIcon}
                   placeholder="Last Name"
                   placeholderTextColor="#CCCCCC"
-                  onChange={handlelName}
+                  onChangeText={handlelName}
                   value={lname}
                 />
                 {lnameStartedTyping && (
@@ -217,7 +214,7 @@ function LoginScreen({ navigation }) {
                     style={styles.input}
                     placeholder="Password"
                     placeholderTextColor="#CCCCCC"
-                    onChange={handlePassword}
+                    onChangeText={handlePassword}
                     value={password}
                     secureTextEntry={!passwordVisible} // Hide password if not visible
                   />
