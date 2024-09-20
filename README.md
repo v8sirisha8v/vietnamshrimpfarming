@@ -2,12 +2,12 @@
 
 Work accomplished so far:
 
-![a1 (2)](https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426)
-![a2 (1)](https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a)
-![a7 (2)](https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6)
-![a4 (1)](https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1)
-![a5 (1)](https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58)
-![a6 (1)](https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda)
+<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="40px" height="400px" />
+<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="40px" height="400px" />
+<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="40px" height="400px" />
+<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="40px" height="400px" />
+<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="40px" height="400px" />
+<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="40px" height="400px" />
 
 Guide before starting to contribute!
 
