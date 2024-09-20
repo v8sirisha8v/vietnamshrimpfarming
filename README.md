@@ -1,15 +1,15 @@
 # vietnamshrimpfarming
 
-Work accomplished so far:
+**Documented work**
 
-<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="250px" height="400px" />
-<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="250px" height="400px" />
-<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="250px" height="400px" />
-<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="250px" height="400px" />
-<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="250px" height="400px" />
-<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="250px" height="400px" />
+<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="200px" height="400px" />
+<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="200px" height="400px" />
+<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="200px" height="400px" />
+<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="200px" height="400px" />
+<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="200px" height="400px" />
+<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="200px" height="400px" />
 
-Guide before starting to contribute!
+**Guide before starting to contribute!**
 
 1) Install Git Bash https://git-scm.com/download/win 
 Install Node https://nodejs.org/en/download/prebuilt-installer 
@@ -48,7 +48,7 @@ Common Errors
 If it says “Could not connect to the development server”, just keep retrying it by loading the app a few times or starting it up again. It happens to me a lot too lol
 “Address already in use” - there is an instance of the server running. To kill it so that the port can be used, type taskkill /F /IM node.exe (for windows), and it should kill any processes so that you can run the backend server. I think the Mac/Linux version is killall node.
 
-Other info that’ll have to be troubleshooted later 
+**Other info that’ll have to be troubleshooted later:**
 
 Backend was not connecting to frontend (Axios Error: Network Error / Request error)
 What I tried:
@@ -58,8 +58,7 @@ Implementing CORs
 Configuring firewall to port 3001
 Server does start when i go to ip address, but says cannot GET request at API endpoint (/register)
 
-Figured out that the server had to take https requests instead of http requests for security purposes, and that requires an SSL cert which requires a domain name, both which may have to be purchased. Have to use Certbot and stuff as well and it’s kinda complicated so will have research that 
+Figured out that the server had to take https requests instead of http requests for security purposes, and that requires an SSL cert which requires a domain name, both which may have to be purchased. Have to use Certbot and stuff as well and it’s kinda complicated so will have research that.
 Let’s Encrypt - free ssl cert
-duckdns - free domain? idk 
 
-For now we use ngrok
+For now we use Firebase
