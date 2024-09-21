@@ -2,12 +2,12 @@
 
 **Documented work**
 
-<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="200px" height="400px" />
-<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="200px" height="400px" />
-<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="200px" height="400px" />
-<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="200px" height="400px" />
-<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="200px" height="400px" />
-<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="200px" height="400px" />
+<img src="https://github.com/user-attachments/assets/07abecb3-e28c-41ab-8143-ee230fa71426" width="180px" height="400px" />
+<img src="https://github.com/user-attachments/assets/ba7a0d83-54aa-40df-bf2b-8b461d55b17a" width="180px" height="400px" />
+<img src="https://github.com/user-attachments/assets/f479645d-834e-419c-883f-dbe0f12a53f6" width="180px" height="400px" />
+<img src="https://github.com/user-attachments/assets/8c3cf52c-7d98-488c-ab0f-56250fcb87b1" width="180px" height="400px" />
+<img src="https://github.com/user-attachments/assets/cbbde362-4a22-4ffe-83b2-e7a37d024b58" width="180px" height="400px" />
+<img src="https://github.com/user-attachments/assets/4b8600a6-a030-4489-8cee-711d1454bdda" width="180px" height="400px" />
 
 **Guide before starting to contribute!**
 
@@ -21,34 +21,32 @@ Do wsl –install so that you can use sudo commands if you’re on windows (not 
 OR if you’re running Windows 11 Insider Preview Build 26052 or higher you can enable sudo https://learn.microsoft.com/en-us/windows/sudo/ → follow this 
 Install ngrok 
 
-These next steps will also be in command prompt:
+**These next steps will also be in command prompt:**
 
 Type “git clone https://github.com/v8sirisha8v/vietnamshrimpfarming.git”
 cd means current directory, it's the name to slide into the current directory. type “cd vietnamshrimpfarming” 
 Type npm install
 Idk if you need to do these put also do npm install react-native and npm install expo-cli in case
 
-App Running Simulation
+**App Running Simulation**
 
 Install the Expo Go app on your phone!
 
 Command Prompt (continue)
 
-Front End
+**Front End**
 
 Type cd vietnamshrimpfarming one more time. The directory should be cd vietnamshrimpfarming/vietnamshrimpfarming at this point. This is the folder with the frontend stuff
 Type npx expo start –tunnel (there are 2 dashes before “tunnel”)
 Say yes to the “required to use tunnels, would you like to install it globally?”
 Scan the QR code that shows up on your terminal and it should load on Expo Go! You’re done with the setup!
 
-(yes you have to do this each time when you run the app unless someone finds another way lol or when we eventually obtain a SSL cert)
+**Common Errors**
 
-Common Errors
-
-If it says “Could not connect to the development server”, just keep retrying it by loading the app a few times or starting it up again. It happens to me a lot too lol
+If it says “Could not connect to the development server”, just keep retrying it by loading the app a few times or starting it up again.
 “Address already in use” - there is an instance of the server running. To kill it so that the port can be used, type taskkill /F /IM node.exe (for windows), and it should kill any processes so that you can run the backend server. I think the Mac/Linux version is killall node.
 
-**Other info that’ll have to be troubleshooted later:**
+**Other info that’ll have to be troubleshooted later for the backend**
 
 Backend was not connecting to frontend (Axios Error: Network Error / Request error)
 What I tried:
