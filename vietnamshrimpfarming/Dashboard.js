@@ -65,7 +65,7 @@ const DashboardScreen = ({ navigation }) => {
       data: Array.from({ length: 6 }, () => Math.random() * 14)
     },
     {
-      title: "Dissolved Oxygen",
+      title: "Dissolving Oxygen",
       data: Array.from({ length: 6 }, () => Math.random() * 10)
     },
     {
