@@ -2,10 +2,11 @@ import React from 'react';
 import { Dimensions, TouchableOpacity, SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
 import { FontAwesome, AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
+import { TabView, SceneMap } from 'react-native-tab-view';
 
 const DashboardScreen = ({ navigation }) => {
 
-  const Footer = () => {
+  const Footer = () => { 
     return (
       <View style={styles.footer}>
         <TouchableOpacity style={styles.iconContainer}>
@@ -74,43 +75,66 @@ const DashboardScreen = ({ navigation }) => {
     }
   ];
 
-  return (
+const renderChart = (chartData) => (
+    <View style={styles.chartContainer}>
+      <View style={styles.chartHeader}>
+        <Text style={styles.chartTitle}>{chartData.title}</Text>
+        <Text style={styles.chartValue}>Latest: {chartData.data[chartData.data.length - 1].toFixed(2)}</Text>
+      </View>
+      <LineChart
+        data={{
+          labels: generateHourlyLabels(),
+          datasets: [
+            {
+              data: chartData.data,
+              color: (opacity = 1) => `rgba(255, 64, 64, ${opacity})`,
+              strokeWidth: 2
+            }
+          ]
+        }}
+        width={Dimensions.get("window").width}
+        height={220}
+        yAxisInterval={1}
+        chartConfig={chartConfig}
+        bezier
+        style={{
+          marginVertical: 8,
+          marginHorizontal: 20,
+          borderRadius: 16
+        }}
+      />
+    </View>
+  );
+
+  // Mapping data to individual scenes for the TabView
+  const scenes = {
+    pH: () => renderChart(data[0]),
+    oxygen: () => renderChart(data[1]),
+    orp: () => renderChart(data[2])
+  };
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'pH', title: 'pH' },
+    { key: 'oxygen', title: 'Dissolved Oxygen' },
+    { key: 'orp', title: 'ORP' }
+  ]);
+ 
+return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.text}>Dashboard</Text>
-        </View>
-        {data.map((item, index) => (
-          <View key={index}>
-            <View style={styles.chartHeader}>
-              <Text style={styles.chartTitle}>{item.title}</Text>
-              <Text style={styles.chartValue}>Latest: {item.data[item.data.length - 1].toFixed(2)}</Text>
-            </View>
-            <LineChart
-              data={{
-                labels: generateHourlyLabels(),
-                datasets: [
-                  {
-                    data: item.data,
-                    color: (opacity = 1) => `rgba(255, 64, 64, ${opacity})`, // Red color for the line
-                    strokeWidth: 2, // Optional
-                  }
-                ]
-              }}
-              width={Dimensions.get("window").width} // from react-native
-              height={220}
-              yAxisInterval={1} // optional, defaults to 1
-              chartConfig={chartConfig}
-              bezier
-              style={{
-                marginVertical: 8,
-                marginHorizontal: 20,
-                borderRadius: 16
-              }}
-            />
-          </View>
-        ))}
-      </ScrollView>
+      <View style={styles.header}>
+        <Text style={styles.text}>Dashboard</Text>
+      </View>
+      
+      {/* TabView to swipe through charts */}
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={SceneMap(scenes)}
+        onIndexChange={setIndex}
+        initialLayout={{ width: Dimensions.get('window').width }}
+        style={{ flex: 1 }}
+      />
+
       <Footer navigation={navigation} />
     </SafeAreaView>
   );
