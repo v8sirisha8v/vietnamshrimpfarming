@@ -1,11 +1,8 @@
 {
   "expo": {
-    "name": "vietnamshrimpfarming", 
+    "name": "vietnamshrimpfarming",
     "slug": "vietnamshrimpfarming",
-<<<<<<< HEAD
     "sdkVersion": "52.0.0",
-=======
->>>>>>> cab4b885956d959c456b1199837c80a45817dcf5
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
