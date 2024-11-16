@@ -5,7 +5,7 @@ import firebase_admin
 from firebase_admin import credentials, db
 
 # Initialize Firebase
-cred = credentials.Certificate('C:\\Users\\siris\\vietnamshrimpfarming\\vietnamshrimpfarming\\vietnamshrimpfarming-9fec7-firebase-adminsdk-dvix3-842ae02018.json')
+cred = credentials.Certificate('C:\\Users\\siris\\secure\\vietnamshrimpfarming-9fec7-firebase-adminsdk-dvix3-842ae02018.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://vietnamshrimpfarming-9fec7-default-rtdb.firebaseio.com/'
 })

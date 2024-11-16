@@ -27,7 +27,7 @@ const SOSAnimation = () => {
         }),
       ]),
       { iterations: 3 } // Adjust the number of iterations as needed
-    ).start(() => navigation.navigate('Dashboard'));
+    ).start(() => navigation.navigate('Login'));
   };
 
   return (
