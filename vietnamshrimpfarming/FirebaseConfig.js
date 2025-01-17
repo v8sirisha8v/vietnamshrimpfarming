@@ -1,11 +1,9 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import 'firebase/compat/database'; // Add this for Realtime Database
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
   apiKey: "AIzaSyArctNi0CbBTsQA54SpxfcSTZlUlcKmwDo",
   authDomain: "vietnamshrimpfarming-9fec7.firebaseapp.com",
@@ -13,9 +11,16 @@ export const firebaseConfig = {
   storageBucket: "vietnamshrimpfarming-9fec7.appspot.com",
   messagingSenderId: "275640121449",
   appId: "1:275640121449:web:60141a588e6ba8c7928af8",
-  measurementId: "G-NDNJY7WNYD"
+  measurementId: "G-NDNJY7WNYD",
+  databaseURL: "https://vietnamshrimpfarming-9fec7-default-rtdb.firebaseio.com" // Add your Realtime Database URL
 };
 
-if (!firebase.apps.length){
+if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
+// Export services if needed
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+export const database = firebase.database(); // Export Realtime Database
+export default firebase;
