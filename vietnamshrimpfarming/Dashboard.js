@@ -17,7 +17,7 @@ const DashboardScreen = ({ navigation }) => {
         <TouchableOpacity style={styles.iconContainer}>
           <Ionicons name="notifications-outline" size={24} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('Profile')}>
           <Ionicons name="person-outline" size={24} color="white" />
         </TouchableOpacity>
       </View>
@@ -105,7 +105,8 @@ const DashboardScreen = ({ navigation }) => {
               style={{
                 marginVertical: 8,
                 marginHorizontal: 20,
-                borderRadius: 16
+                borderRadius: 16,
+                paddingBottom: 10
               }}
             />
           </View>
@@ -134,11 +135,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 50,
+    height: 75,
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: 'black',
   },
   iconContainer: {
     flex: 1,

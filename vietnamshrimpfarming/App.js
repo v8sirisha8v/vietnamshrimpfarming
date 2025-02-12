@@ -9,6 +9,7 @@ import RegisterPond from "./RegisterPond";
 
 import {FIREBASE_APP} from './FirebaseConfig';
 import { registerRootComponent } from 'expo';
+import Profile from "./Profile";
 
 const Stack = createStackNavigator(); // Creating a stack navigator
 
@@ -20,7 +21,8 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={DashboardScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Login" component={LoginScreen2} options={{ headerShown: false }}/> 
         <Stack.Screen name="Verification" component={Verification} options={{ headerShown: false }}/> 
-        <Stack.Screen name="RegisterPond" component={RegisterPond} options={{ headerShown: false }}/> 
+        <Stack.Screen name="RegisterPond" component={RegisterPond} options={{ headerShown: false }}/>
+        <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer> 
   );

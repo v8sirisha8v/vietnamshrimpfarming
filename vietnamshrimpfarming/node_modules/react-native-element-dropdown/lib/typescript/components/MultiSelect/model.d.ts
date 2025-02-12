@@ -1,4 +1,4 @@
-/// <reference types="react" />
+import type React from 'react';
 import type { FlatListProps, ImageStyle, StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { TextProps } from 'react-native';
 export interface IMultiSelectRef {
@@ -35,6 +35,7 @@ export interface MultiSelectProps<T> {
     disable?: boolean;
     showsVerticalScrollIndicator?: boolean;
     searchPlaceholder?: string;
+    searchPlaceholderTextColor?: string;
     dropdownPosition?: 'auto' | 'top' | 'bottom';
     flatListProps?: Omit<FlatListProps<any>, 'renderItem' | 'data'>;
     alwaysRenderSelectedItem?: boolean;
@@ -51,11 +52,11 @@ export interface MultiSelectProps<T> {
     excludeItems?: T[];
     excludeSearchItems?: T[];
     onChange: (value: string[]) => void;
-    renderLeftIcon?: (visible?: boolean) => JSX.Element | null | undefined;
-    renderRightIcon?: (visible?: boolean) => JSX.Element | null | undefined;
-    renderItem?: (item: T, selected?: boolean) => JSX.Element | null | undefined;
-    renderSelectedItem?: (item: T, unSelect?: (item: T) => void) => JSX.Element | null | undefined;
-    renderInputSearch?: (onSearch: (text: string) => void) => JSX.Element | null | undefined;
+    renderLeftIcon?: (visible?: boolean) => React.ReactElement | null;
+    renderRightIcon?: (visible?: boolean) => React.ReactElement | null;
+    renderItem?: (item: T, selected?: boolean) => React.ReactElement | null;
+    renderSelectedItem?: (item: T, unSelect?: (item: T) => void) => React.ReactElement | null;
+    renderInputSearch?: (onSearch: (text: string) => void) => React.ReactElement | null;
     onFocus?: () => void;
     onBlur?: () => void;
     searchQuery?: (keyword: string, labelValue: string) => boolean;
