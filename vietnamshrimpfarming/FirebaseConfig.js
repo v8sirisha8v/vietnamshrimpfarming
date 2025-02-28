@@ -1,26 +1,28 @@
+// Import Firebase properly for Web SDK
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import 'firebase/compat/database'; // Add this for Realtime Database
+import 'firebase/compat/database';
 
-// Your web app's Firebase configuration
+// Your Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyArctNi0CbBTsQA54SpxfcSTZlUlcKmwDo",
   authDomain: "vietnamshrimpfarming-9fec7.firebaseapp.com",
+  databaseURL: "https://vietnamshrimpfarming-9fec7-default-rtdb.firebaseio.com",
   projectId: "vietnamshrimpfarming-9fec7",
   storageBucket: "vietnamshrimpfarming-9fec7.appspot.com",
   messagingSenderId: "275640121449",
   appId: "1:275640121449:web:60141a588e6ba8c7928af8",
-  measurementId: "G-NDNJY7WNYD",
-  databaseURL: "https://vietnamshrimpfarming-9fec7-default-rtdb.firebaseio.com" // Add your Realtime Database URL
+  measurementId: "G-NDNJY7WNYD"
 };
 
+// **Ensure Firebase is initialized only once**
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Export services if needed
+// Export Firebase services
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const database = firebase.database(); // Export Realtime Database
+export const database = firebase.database();
 export default firebase;

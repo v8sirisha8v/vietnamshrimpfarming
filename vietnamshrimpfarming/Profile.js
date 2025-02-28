@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, TouchableOpacity, SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
 import { FontAwesome, AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
-// import auth from '@react-native-firebase/auth';
-// import firestore from '@react-native-firebase/firestore';
+import { auth, database } from './FirebaseConfig';
 
 
 const Profile = ({ navigation }) => {
+    const [phoneNumber, setPhoneNumber] = useState('');
+    useEffect(() => {
+      const user = auth.currentUser;
+      if (user) {
+        setPhoneNumber(user.phoneNumber || 'No Phone Number Available')
+      }
+    }, [])
+
     const Footer = () => {
         return (
           <View style={styles.footer}>
@@ -30,7 +37,14 @@ const Profile = ({ navigation }) => {
 
       return (
         <SafeAreaView style={styles.container}>
-          <Text style={styles.text}>Welcome, {} </Text>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Profile</Text>
+          </View>
+          <View style={styles.personalInfoContainer}>
+            <Text style={styles.subheaderText}>Personal Info:</Text>
+            <Text style={styles.smallText}>Phone Number</Text>
+            <Text style={styles.subheaderText}> {phoneNumber} </Text>
+          </View>
           <Footer navigation={navigation} />
         </SafeAreaView>
       );
@@ -46,9 +60,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
   },
+  headerText: {
+    color: '#FFF',
+    fontSize: 30,
+    fontWeight: 700,
+  },
+  subheaderText: {
+    color: '#FFF',
+    fontSize: 20,
+    fontWeight: 600,
+  },
+  smallText: {
+    color: '#FFF',
+    fontSize: 15,
+    fontWeight: 400,
+    paddingVertical: 10,
+    textDecorationLine: 'underline',
+  },
   text: {
     color: '#FFF',
     fontSize: 20,
+    fontWeight: 400,
   },
   footer: {
     flexDirection: 'row',
@@ -63,26 +95,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: 'black',
   },
-  iconContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chartHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    paddingHorizontal: 20,
-  },
-  chartTitle: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 16,
-  },
-  chartValue: {
-    color: 'white',
-    fontSize: 16,
+  personalInfoContainer: {
+    paddingLeft: 30, // Adjust as needed
   },
 });
 

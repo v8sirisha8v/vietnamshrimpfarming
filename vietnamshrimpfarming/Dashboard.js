@@ -2,8 +2,13 @@ import React from 'react';
 import { Dimensions, TouchableOpacity, SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
 import { FontAwesome, AntDesign, MaterialIcons, Entypo, Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
+import useFirebaseData from './useFirebaseData';
+import { database } from './FirebaseConfig';
 
 const DashboardScreen = ({ navigation }) => {
+
+  const allData = useFirebaseData("/IMU_LSM6DS3");
+
 
   const Footer = () => {
     return (
@@ -59,18 +64,45 @@ const DashboardScreen = ({ navigation }) => {
     return hours;
   };
 
+  for (const key in allData) {
+    console.log(`${key}: ${allData[key].pHValue}`)
+  };
+
+  const get_pHArray = () => {
+    let pHValues = []
+    for (const key in allData) {
+      pHValues.push(`${allData[key].pHValue}`)
+      console.log
+    };
+    return pHValues;
+  }
+  const get_rawValueArray = () => {
+    let rawValues = []
+    for (const key in allData) {
+      rawValues.push(`${allData[key].rawValue}`)
+    };
+    return rawValues;
+  }
+  const get_voltageArray = () => {
+    let voltages = []
+    for (const key in allData) {
+      voltages.push(`${allData[key].voltage}`)
+    };
+    return voltages;
+  }
+
   const data = [
     {
       title: "pH",
-      data: Array.from({ length: 6 }, () => Math.random() * 14)
+      data: get_pHArray(),
     },
     {
       title: "Dissolved Oxygen",
-      data: Array.from({ length: 6 }, () => Math.random() * 10)
+      data: get_rawValueArray(),
     },
     {
       title: "ORP",
-      data: Array.from({ length: 6 }, () => Math.random() * 100)
+      data: get_voltageArray(),
     }
   ];
 
@@ -78,13 +110,16 @@ const DashboardScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
-          <Text style={styles.text}>Dashboard</Text>
+          <Text style={styles.headerText}>Dashboard</Text>
+          <Text style={styles.headerText}>
+            {allData === null ? "Loading..." : `pH Value: ${allData}`}
+          </Text>
         </View>
         {data.map((item, index) => (
           <View key={index}>
             <View style={styles.chartHeader}>
               <Text style={styles.chartTitle}>{item.title}</Text>
-              <Text style={styles.chartValue}>Latest: {item.data[item.data.length - 1].toFixed(2)}</Text>
+              <Text style={styles.chartValue}>Latest: {item.data[item.data.length - 1]}</Text>
             </View>
             <LineChart
               data={{
@@ -130,6 +165,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFF',
     fontSize: 20,
+    fontWeight: 700,
   },
   footer: {
     flexDirection: 'row',
@@ -164,6 +200,11 @@ const styles = StyleSheet.create({
   chartValue: {
     color: 'white',
     fontSize: 16,
+  },
+  headerText: {
+    color: '#FFF',
+    fontSize: 30,
+    fontWeight: 700,
   },
 });
 

@@ -1,5 +1,9 @@
 {
-  "dependencies": {
-    "react-native": "^0.74.1"
-  }
+    "dependencies": {
+    "expo": "latest",
+    "react-native": "0.76.7",
+    "react-native-screens": "~4.4.0",
+    "react-native-webview": "13.12.5",
+    "firebase": "^9.0.0"
+}
 }
