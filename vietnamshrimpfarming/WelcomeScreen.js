@@ -29,7 +29,7 @@ const SOSAnimation = () => {
       { iterations: 3 } // Adjust the number of iterations as needed
     ).start(() => {
       // Navigate to the correct screen after animation ends
-      navigation.navigate('Dashboard'); // Or 'Login' based on your flow
+      navigation.navigate('Login'); // Or 'Login' based on your flow
     });
   };
 

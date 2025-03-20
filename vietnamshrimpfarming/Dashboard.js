@@ -64,9 +64,6 @@ const DashboardScreen = ({ navigation }) => {
     return hours;
   };
 
-  for (const key in allData) {
-    console.log(`${key}: ${allData[key].pHValue}`)
-  };
 
   const get_pHArray = () => {
     let pHValues = []
@@ -111,9 +108,6 @@ const DashboardScreen = ({ navigation }) => {
       <ScrollView>
         <View style={styles.header}>
           <Text style={styles.headerText}>Dashboard</Text>
-          <Text style={styles.headerText}>
-            {allData === null ? "Loading..." : `pH Value: ${allData}`}
-          </Text>
         </View>
         {data.map((item, index) => (
           <View key={index}>
@@ -126,7 +120,7 @@ const DashboardScreen = ({ navigation }) => {
                 labels: generateHourlyLabels(),
                 datasets: [
                   {
-                    data: item.data,
+                    data: item.data.slice(-6),
                     color: (opacity = 1) => `rgba(255, 64, 64, ${opacity})`, // Red color for the line
                     strokeWidth: 2, // Optional
                   }
