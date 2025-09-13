@@ -56,7 +56,3 @@ Implementing CORs
 Configuring firewall to port 3001
 Server does start when i go to ip address, but says cannot GET request at API endpoint (/register)
 
-Figured out that the server had to take https requests instead of http requests for security purposes, and that requires an SSL cert which requires a domain name, both which may have to be purchased. Have to use Certbot and stuff as well and it’s kinda complicated so will have research that.
-Let’s Encrypt - free ssl cert
-
-For now we use Firebase
